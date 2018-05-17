@@ -1,6 +1,6 @@
 import '../assets/styles/footer.styl'
 export default {
-  data() {
+  data () {
     return {
       author: 'zhihui'
     }

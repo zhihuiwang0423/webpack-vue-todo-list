@@ -25,32 +25,32 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 let id = 0
 export default {
-  data() {
-  return {
-    todos: [],
-    filter: 'all'
-  }
-},
+  data () {
+    return {
+      todos: [],
+      filter: 'all'
+    }
+  },
   components: {
     Item,
     Tabs
   },
   computed: {
-    filteredTodos() {
-      if(this.filter === 'all') {
+    filteredTodos () {
+      if (this.filter === 'all') {
         return this.todos
       }
-      return this.todos.filter(_ => _.completed == (this.filter == 'completed'))
+      return this.todos.filter(_ => _.completed === (this.filter === 'completed'))
     }
   },
   methods: {
-    clearAllCompleted() {
+    clearAllCompleted () {
       this.todos = this.todos.filter(todo => !todo.completed)
     },
-    toggleFilter(state) {
+    toggleFilter (state) {
       this.filter = state
     },
-    addTodo(e) {
+    addTodo (e) {
       this.todos.unshift({
         id: id++,
         content: e.target.value.trim(),
@@ -58,7 +58,7 @@ export default {
       })
       e.target.value = ''
     },
-    delTodo(id) {
+    delTodo (id) {
       this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
     }
   }

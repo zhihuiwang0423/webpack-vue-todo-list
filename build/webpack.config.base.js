@@ -2,8 +2,9 @@ const path = require('path')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HTMLPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
-
+const createVueLoaderOptions = require('./vue-loader.config')
 const isDev = process.env.NODE_ENV === 'development'
+let config
 config = {
   target: 'web',
   mode: process.env.NODE_ENV || 'production',
@@ -15,8 +16,15 @@ config = {
   module: {
     rules: [
       {
+        test: /\.(vue|js|jsx)$/,
+        loader: 'eslint-loader',
+        exclude: /node_moudles/,
+        enforce: 'pre'
+      },
+      {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: createVueLoaderOptions(isDev)
       },
       {
         test: /\.jsx$/,
@@ -26,12 +34,12 @@ config = {
         test: /\.(gif|jpg|jpeg|png|svg)$/,
         use: [
           {
-          loader: 'url-loader',
-          options: {
-            limit: 1024,
-            name: 'resources/[path][name].[hash:8][ext]'
+            loader: 'url-loader',
+            options: {
+              limit: 1024,
+              name: 'resources/[path][name].[hash:8][ext]'
+            }
           }
-        }
         ]
       }
     ]
@@ -44,7 +52,7 @@ config = {
         NODE_ENV: isDev ? '"development"' : '"production"'
       }
     }),
-    new HTMLPlugin(),
+    new HTMLPlugin()
   ]
 }
 module.exports = config

@@ -2,6 +2,7 @@
 <div id="app">
   <div id="cover"></div>
   <Header></Header>
+  
   <Todo></Todo>
   <Footer></Footer>
 </div>

@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV === 'development'
 config = {
   target: 'web',
   mode: 'none',
-  entry: path.join(__dirname, 'src/index.js'),
+  entry: path.join(__dirname, 'client/index.js'),
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'dist')
@@ -30,7 +30,7 @@ config = {
           loader: 'url-loader',
           options: {
             limit: 1024,
-            name: '[name].[ext]'
+            name: 'resources/[path][name].[hash:8][ext]'
           }
         }
         ]
@@ -79,11 +79,11 @@ if(isDev) {
   )
 } else {
   config.entry = {
-    app: path.join(__dirname, 'src/index.js'),
+    app: path.join(__dirname, 'client/index.js'),
     vendor: ['vue']
   }
-  // config.output.filename = '[name].[chunkhash:8].js'
-  config.output.filename = '[name].js'
+  config.output.filename = '[name].[chunkhash:8].js'
+  // config.output.filename = '[name].js'
   config.module.rules.push(
     {
       test: /\.styl/,
@@ -104,7 +104,7 @@ if(isDev) {
   )
   config.plugins.push(
 
-    new ExtractPlugin('styles.css')
+    new ExtractPlugin('styles.[chunkhash:8].css')
 
   )
 

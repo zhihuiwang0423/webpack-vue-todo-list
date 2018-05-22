@@ -4,10 +4,10 @@ const webpack = require('webpack')
 const configBase = require('./webpack.config.base')
 const webpackMerge = require('webpack-merge')
 const isDev = process.env.NODE_ENV === 'development'
-
-if(isDev) {
+let config
+if (isDev) {
   config = webpackMerge(configBase, {
-    module:{
+    module: {
       rules: [
         {
           test: /\.styl/,
@@ -30,17 +30,25 @@ if(isDev) {
       port: '8000',
       host: '0.0.0.0',
       overlay: {
-        errors: true,
+        errors: true
       },
       open: true,
-      hot: true
+      hot: true,
+      historyApiFallback: {
+        index: '/public/index.html'
+      }
+    },
+    // import Vue from 'vue'
+    resolve: {
+      alias: {
+        'vue': path.join(__dirname, '../node_modules/vue/dist/vue.esm.js')
+      }
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin()
     ]
   })
-  
 } else {
   config = webpackMerge(configBase, {
     entry: {
@@ -71,46 +79,46 @@ if(isDev) {
       ]
     },
     plugins: [
-      new ExtractPlugin('styles.[chunkhash:8].css') 
+      new ExtractPlugin('styles.[chunkhash:8].css')
     ],
     optimization: {
-  
+
       splitChunks: {
-  
+
         cacheGroups: {
-  
+
           commons: {
-  
+
             chunks: 'initial',
-  
-            minChunks: 2, maxInitialRequests: 5,
-  
+
+            minChunks: 2,
+            maxInitialRequests: 5,
+
             minSize: 0
-  
+
           },
-  
+
           vendor: {
-  
+
             test: /node_modules/,
-  
+
             chunks: 'initial',
-  
+
             name: 'vendor',
-  
+
             priority: 10,
-  
+
             enforce: true
-  
+
           }
-  
+
         }
-  
+
       },
-  
+
       runtimeChunk: true
-  
+
     }
   })
- 
 }
 module.exports = config

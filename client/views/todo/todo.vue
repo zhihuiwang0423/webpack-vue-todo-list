@@ -6,18 +6,19 @@
       placeholder="接下来做什么?"
       @keyup.enter="addTodo"
     >
-    <Item 
+    <Item
       v-for="todo in filteredTodos"
       :key="todo.id"
-      :todo="todo" 
+      :todo="todo"
       @del="delTodo"
     />
-    <Tabs 
-      :filter="filter" 
-      :todos="todos" 
-      @toggle="toggleFilter" 
-      @clearAllCompleted="clearAllCompleted"   
+    <Tabs
+      :filter="filter"
+      :todos="todos"
+      @toggle="toggleFilter"
+      @clearAllCompleted="clearAllCompleted"
     />
+    <!-- <router-view /> -->
   </section>
 </template>
 <script>
@@ -25,6 +26,10 @@ import Item from './item.vue'
 import Tabs from './tabs.vue'
 let id = 0
 export default {
+  props: ['id'],
+  mounted () {
+    console.log(this.id)
+  },
   data () {
     return {
       todos: [],

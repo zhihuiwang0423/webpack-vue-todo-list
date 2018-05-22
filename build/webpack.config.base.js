@@ -11,7 +11,8 @@ config = {
   entry: path.join(__dirname, '../client/index.js'),
   output: {
     filename: 'bundle.js',
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, '../dist'),
+    publicPath: '/public/'
   },
   module: {
     rules: [
@@ -52,7 +53,9 @@ config = {
         NODE_ENV: isDev ? '"development"' : '"production"'
       }
     }),
-    new HTMLPlugin()
+    new HTMLPlugin({
+      template: path.join(__dirname, 'template.html')
+    })
   ]
 }
 module.exports = config

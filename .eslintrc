@@ -1,9 +1,15 @@
 {
   "extends": "standard",
   "plugins": [
-    "html"
+    "html",
+    "vue"
   ],
   "rules": {
     "no-new": "off"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
   }
 }
